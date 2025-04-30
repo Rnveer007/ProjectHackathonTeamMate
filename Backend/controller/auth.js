@@ -61,9 +61,9 @@ export async function loginAdmin(req, res) {
         )
 
         res.cookie("adminToken", adminToken, {
-            httpOnly: true,
-            secure: false,
-            sameSite: 'strict',
+            httpOnly: false,
+            secure: true,
+            sameSite: 'none',
         })
 
         res.status(200).json({
@@ -85,8 +85,8 @@ export async function logoutAdmin(req, res) {
     try {
         res.clearCookie('adminToken', {
             httpOnly: false,
-            secure: false,
-            sameSite: 'strict'
+            secure: true,
+            sameSite: 'none'
         })
         res.status(200).json({ message: 'Admin Logged Out Successfully' })
 
@@ -154,9 +154,9 @@ export async function loginUser(req, res) {
         )
 
         res.cookie("userToken", userToken, {
-            httpOnly: true,
-            secure: false,
-            sameSite: 'strict'
+            httpOnly: false,
+            secure: true,
+            sameSite: 'none'
         })
 
         res.status(200).json({
@@ -179,8 +179,8 @@ export async function logoutUser(req, res) {
     try {
         res.clearCookie('userToken', {
             httpOnly: false,
-            secure: false,
-            sameSite: 'strict'
+            secure: true,
+            sameSite: 'none'
         })
         res.status(200).json({ message: 'User Logged Out Successfully' })
 
