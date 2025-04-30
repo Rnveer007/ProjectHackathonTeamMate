@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function AdminLogin() {
     const navigate = useNavigate();
-
     const [form, setForm] = useState({
         email: '',
         password: '',

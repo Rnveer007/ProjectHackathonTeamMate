@@ -6,6 +6,7 @@ import UserRegister from "./user/pages/UserRegister"
 import AdminLogin from "./admin/pages/AdminLogin"
 import AdminHome from "./admin/pages/AdminHome"
 import AdminRegister from "./admin/pages/AdminRegister"
+import AddHackathon from "./admin/pages/AddHackathon"
 
 
 const router = createBrowserRouter([
@@ -42,6 +43,11 @@ const router = createBrowserRouter([
         path: "adminRegister",
         element:
           <AdminRegister />
+      },
+      {
+        path: "addHackathon",
+        element:
+          <AddHackathon />
       },
     ]
   }
