@@ -37,15 +37,15 @@ export async function loginAdmin(req, res) {
     try {
         const { email, password } = req.body;
 
-        const admin = await Admin.findOne({ email })
+        const admin = await Admin.findOne({ email });
 
         if (!admin) {
-            return res.status(401).json({ message: "Invailid Credentials" })
+            return res.status(401).json({ message: "Invalid Credentials" }); 
         }
-        const isPasswordValid = await bcrypt.compare(password, admin.password);
 
+        const isPasswordValid = await bcrypt.compare(password, admin.password);
         if (!isPasswordValid) {
-            return res.status(401).json({ message: "Invailid Credentials" })
+            return res.status(401).json({ message: "Invalid Credentials" }); 
         }
 
         const adminToken = jwt.sign(
@@ -55,31 +55,29 @@ export async function loginAdmin(req, res) {
                 role: "admin",
             },
             process.env.JWT_SECRET,
-            {
-                expiresIn: "1h"
-            }
-        )
+            { expiresIn: "1h" }
+        );
 
         res.cookie("adminToken", adminToken, {
             httpOnly: true,
             secure: true,
-            sameSite: 'none',
-        })
+            sameSite: "none",
+        });
 
         res.status(200).json({
             message: "Admin Login Successfully",
             token: adminToken,
             admin: {
                 id: admin._id,
-                email: admin.email
-            }
-        })
-
+                email: admin.email,
+            },
+        });
     } catch (error) {
-        console.log('Login Error', error)
-        res.status(500).json({ message: error.message })
+        console.log("Login Error", error);
+        res.status(500).json({ message: "Internal Server Error" }); 
     }
 }
+
 
 export async function logoutAdmin(req, res) {
     try {
@@ -132,13 +130,13 @@ export async function loginUser(req, res) {
         const user = await User.findOne({ email });
 
         if (!user) {
-            res.status(400).json({ message: 'invailid Credentials' })
+            return res.status(401).json({ message: 'Invalid Credentials' });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
-            res.status(400).json({ message: 'invailid Credentials' })
+            return res.status(401).json({ message: 'Invalid Credentials' });
         }
 
         const userToken = jwt.sign(
@@ -149,31 +147,31 @@ export async function loginUser(req, res) {
             },
             process.env.JWT_SECRET,
             {
-                expiresIn: '1h'
+                expiresIn: '1h',
             }
-        )
+        );
 
         res.cookie("userToken", userToken, {
             httpOnly: true,
             secure: true,
             sameSite: 'none',
-        })
+        });
 
         res.status(200).json({
             message: 'User Login Successfully',
             token: userToken,
             user: {
                 id: user._id,
-                email: user.email
-            }
-        })
+                email: user.email,
+            },
+        });
 
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: 'Server Error' })
+        console.log("Login Error:", error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
-
 }
+
 
 export async function logoutUser(req, res) {
     try {
