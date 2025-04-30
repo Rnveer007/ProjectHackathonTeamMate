@@ -64,6 +64,7 @@ export async function loginAdmin(req, res) {
             httpOnly: false,
             secure: true,
             sameSite: 'none',
+            maxAge: 3600000,
         })
 
         res.status(200).json({
@@ -156,7 +157,8 @@ export async function loginUser(req, res) {
         res.cookie("userToken", userToken, {
             httpOnly: false,
             secure: true,
-            sameSite: 'none'
+            sameSite: 'none',
+            maxAge: 3600000,
         })
 
         res.status(200).json({

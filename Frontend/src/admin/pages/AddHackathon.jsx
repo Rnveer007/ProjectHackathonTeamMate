@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import instance from '../../axiosConfig';
 
 function AddHackathon() {
@@ -12,6 +13,8 @@ function AddHackathon() {
         image: null,
     });
 
+    const navigate = useNavigate();
+
     function handleChange(e) {
         const { name, value, files } = e.target;
         if (name === "image") {
@@ -23,12 +26,33 @@ function AddHackathon() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+
         try {
-            await instance.post('/form/submit', { form }, {
-                withCredentials: true
-            })
+            const data = new FormData();
+            data.append("name", form.name);
+            data.append("mode", form.mode);
+            data.append("description", form.description);
+            data.append("date", form.date);
+            data.append("registrationLink", form.registrationLink);
+            data.append("hackathon", form.hackathon); 
+            if (form.image) {
+                data.append("image", form.image);
+            }
+
+            await instance.post(`/form/submit`, data, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            navigate("/admin/home");
         } catch (error) {
-            console.log(error);
+            if (error.response) {
+                console.error("Server Error:", error.response.data);
+            } else {
+                console.error("Submission Error:", error.message);
+            }
         }
     }
 
@@ -85,7 +109,8 @@ function AddHackathon() {
             <input
                 type="file"
                 name="image"
-                onChange={handleChange} />
+                onChange={handleChange}
+            />
 
             <button type='submit'>Submit</button>
         </form>
