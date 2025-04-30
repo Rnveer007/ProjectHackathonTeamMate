@@ -21,7 +21,7 @@ const formSchema = new mongoose.Schema({
         type: String,
         // required: true
     },
-    hackathonLink: {
+    hackathon: {
         type: String,
         // required: true
     },

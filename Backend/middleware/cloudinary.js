@@ -21,7 +21,6 @@ async function uploadToCloudinary(req) {
     catch (error) {
         console.log(error);
     };
-
 };
 
 export default uploadToCloudinary;
