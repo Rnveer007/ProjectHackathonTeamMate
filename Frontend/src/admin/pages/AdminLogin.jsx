@@ -2,7 +2,6 @@ import { useState } from 'react'
 import instance from '../../axiosConfig';
 import { Link, useNavigate } from 'react-router-dom';
 
-
 function AdminLogin() {
     const navigate = useNavigate();
     const [form, setForm] = useState({
@@ -26,8 +25,8 @@ function AdminLogin() {
         } catch (error) {
             console.log(error)
         }
-
     }
+
     return (
         <>
             <div>
@@ -56,10 +55,8 @@ function AdminLogin() {
                             Register as Admin
                         </Link>
                     </div>
-
                 </form>
             </div>
-
         </>
     )
 }
