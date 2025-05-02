@@ -33,19 +33,26 @@ export async function registerAdmin(req, res) {
     }
 }
 
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import Admin from "../models/Admin.js"; 
+
 export async function loginAdmin(req, res) {
     try {
         const { email, password } = req.body;
 
-        const admin = await Admin.findOne({ email });
+        if (!email || !password) {
+            return res.status(400).json({ message: "Email and password are required" });
+        }
 
+        const admin = await Admin.findOne({ email });
         if (!admin) {
-            return res.status(401).json({ message: "Invalid Credentials" }); 
+            return res.status(401).json({ message: "Invalid Credentials" });
         }
 
         const isPasswordValid = await bcrypt.compare(password, admin.password);
         if (!isPasswordValid) {
-            return res.status(401).json({ message: "Invalid Credentials" }); 
+            return res.status(401).json({ message: "Invalid Credentials" });
         }
 
         const adminToken = jwt.sign(
@@ -62,19 +69,19 @@ export async function loginAdmin(req, res) {
             httpOnly: true,
             secure: true,
             sameSite: "none",
+            maxAge: 3600000, 
         });
 
         res.status(200).json({
             message: "Admin Login Successfully",
-            token: adminToken,
             admin: {
                 id: admin._id,
                 email: admin.email,
             },
         });
     } catch (error) {
-        console.log("Login Error", error);
-        res.status(500).json({ message: "Internal Server Error" }); 
+        console.error("Login Error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 }
 
