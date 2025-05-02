@@ -33,10 +33,6 @@ export async function registerAdmin(req, res) {
     }
 }
 
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import Admin from "../models/Admin.js"; 
-
 export async function loginAdmin(req, res) {
     try {
         const { email, password } = req.body;
