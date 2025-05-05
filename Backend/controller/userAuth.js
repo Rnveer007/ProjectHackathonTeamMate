@@ -89,7 +89,6 @@ export async function logoutUser(req, res) {
     }
 }
 
-
 export async function checkUserToken(req, res, next) {
     const token = req.cookies?.userToken;
 

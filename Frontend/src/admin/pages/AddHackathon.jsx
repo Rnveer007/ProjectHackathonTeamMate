@@ -46,7 +46,7 @@ function AddHackathon() {
                 },
             });
 
-            navigate("/admin/home");
+            navigate("/adminHome");
         } catch (error) {
             if (error.response) {
                 console.error("Server Error:", error.response.data);
