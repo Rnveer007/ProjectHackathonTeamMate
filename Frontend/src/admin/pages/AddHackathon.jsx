@@ -57,7 +57,7 @@ function AddHackathon() {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType='multipart/form-data'>
             <input
                 type="text"
                 name='name'
