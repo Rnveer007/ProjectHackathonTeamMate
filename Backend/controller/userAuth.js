@@ -63,21 +63,15 @@ export async function loginUser(req, res) {
             httpOnly: true,
             secure: true,
             sameSite: 'none',
-        });
-
-        res.status(200).json({
-            message: 'User Login Successfully',
-            token: userToken,
-            user: {
-                id: user._id,
-                email: user.email,
-            },
-        });
+            maxAge: 3600000,
+        })
+        .send({message : "Login successfull", user : user})
 
     } catch (error) {
-        console.log("Login Error:", error);
-        res.status(500).json({ message: 'Internal Server Error' });
-    }
+        return res
+          .status(500)
+          .send({ message: "user not login", errorString: error.message });
+      }
 }
 
 export async function logoutUser(req, res) {
@@ -107,7 +101,6 @@ export async function checkUserToken(req, res, next) {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded;
         next()
-
     } catch (error) {
         console.log(error)
         return res.status(401).json({ message: 'Invailid Token' })
