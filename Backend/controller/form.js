@@ -4,7 +4,8 @@ import uploadToCloudinary from "../middleware/cloudinary.js";
 export async function submitForm(req, res) {
   try {
     const file = req.file;
-    // console.log(file)
+    console.log(file)
+    console.log(req.body)
 
     // Ensure multer processed the file and it's an image
     if (!file || !file.mimetype.startsWith("image/")) {
