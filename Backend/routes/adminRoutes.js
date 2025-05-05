@@ -1,5 +1,5 @@
 import express from 'express';
-import { checkAdminToken, loginAdmin, logoutAdmin, registerAdmin } from '../controller/adminAuth';
+import { checkAdminToken, loginAdmin, logoutAdmin, registerAdmin } from '../controller/adminAuth.js';
 const router = express.Router();
 
 router.post('/register', registerAdmin)
