@@ -20,7 +20,7 @@ function AdminLogin() {
             const response = await instance.post('/admin/login', form, {
                 withCredentials: true
             })
-            // console.log(response.data)
+            console.log(response.data)
             navigate('/adminHome')
         } catch (error) {
             console.log(error)
